@@ -1,5 +1,6 @@
 package org.hong.quotesapi.service;
 
+import org.hong.tool.logger.annotation.Logit;
 import org.hong.quotesapi.entity.Quote;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,11 @@ public class QuoteService extends BaseQuoteService {
         super();
     }
 
+    @Logit
     public List<Quote> getRandomQuotes(Integer num) {
-
         if (quoteList.isEmpty()) {
             return Collections.emptyList();
         }
-
         if (null == num || num <= 1) {
             return new ArrayList<Quote>() {{
                 getARandomQuote().ifPresent(this::add);
