@@ -1,6 +1,7 @@
 package org.hong.quotesapi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.hong.quotesapi.annotation.ResponseWrapper;
 import org.hong.quotesapi.entity.Quote;
 import org.hong.quotesapi.service.QuoteService;
 import org.hong.quotesapi.util.QuoteUtil;
@@ -27,8 +28,13 @@ public class QuoteController {
     }
 
     //http://localhost:9000/quotes/json?num=4
+//    @GetMapping("/json")
+//    public ResponseEntity<List<Quote>> getQuotesInJson(@RequestParam Integer num) {
+//        return ResponseEntity.ok().body(quoteService.getRandomQuotes(num));
+//    }
+    @ResponseWrapper
     @GetMapping("/json")
-    public ResponseEntity<List<Quote>> getQuotesInJson(@RequestParam Integer num) {
-        return ResponseEntity.ok().body(quoteService.getRandomQuotes(num));
+    public List<Quote> getQuotesInJson(@RequestParam Integer num) {
+        return quoteService.getRandomQuotes(num);
     }
 }
