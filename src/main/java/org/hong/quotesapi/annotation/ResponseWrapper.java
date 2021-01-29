@@ -6,8 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Documented
+/**
+ * Handle the response generally
+ *
+ * @author hong
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
+@Documented
 public @interface ResponseWrapper {
 }

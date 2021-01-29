@@ -14,16 +14,25 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author hong
+ */
 @Slf4j
 public abstract class QuoteUtil {
-    private static final Gson gson = new Gson();
+    private static final Gson GSON = new Gson();
     private static final String FILE_NAME = "quotes.json";
     private static final String FILE_PATH = "src/main/resources/";
+
+    /**
+     * Initialize quotes
+     *
+     * @return list of quotes
+     */
     public static List<Quote> initQuote() {
         try {
             //TODO can we remove the file path
             JsonReader reader = new JsonReader(new FileReader(FILE_PATH + FILE_NAME));
-            Quote[] quotes = gson.fromJson(reader, Quote[].class);
+            Quote[] quotes = GSON.fromJson(reader, Quote[].class);
             return Collections.unmodifiableList(Arrays.asList(quotes));
         } catch (FileNotFoundException ex) {
             log.error("File not found: " + FILE_NAME, ex);
@@ -33,10 +42,6 @@ public abstract class QuoteUtil {
         return Collections.emptyList();
     }
 
-    public static String toString(Optional<Quote> quote) {
-        return quote.map((q) -> q.getQuote() + " -- " + q.getAuthor()).orElse("");
-    }
-
     public static String toString(List<Quote> quotes) {
         StringBuilder sb = new StringBuilder();
         quotes.forEach(q -> {
@@ -44,5 +49,9 @@ public abstract class QuoteUtil {
             sb.append(System.getProperty("line.separator"));
         });
         return sb.toString();
+    }
+
+    private static String toString(Optional<Quote> quote) {
+        return quote.map((q) -> q.getQuote() + " -- " + q.getAuthor()).orElse("");
     }
 }

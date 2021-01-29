@@ -3,6 +3,9 @@ package org.hong.quotesapi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author hong
+ */
 @SpringBootApplication
 public class QuotesApiApplication {
 

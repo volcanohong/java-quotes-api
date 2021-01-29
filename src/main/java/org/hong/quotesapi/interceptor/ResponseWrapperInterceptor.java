@@ -2,6 +2,7 @@ package org.hong.quotesapi.interceptor;
 
 import static org.hong.quotesapi.constants.AppConstants.RESPONSE_WRAPPER_ANNOTATION;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hong.quotesapi.annotation.ResponseWrapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -12,6 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+/**
+ * Response interceptor
+ *
+ * @author hong
+ */
+@Slf4j
 @Component
 public class ResponseWrapperInterceptor implements HandlerInterceptor {
     @Override
@@ -21,12 +28,12 @@ public class ResponseWrapperInterceptor implements HandlerInterceptor {
             final HandlerMethod handlerMethod = (HandlerMethod) handler;
             final Class<?> clazz = handlerMethod.getBeanType();
             final Method method = handlerMethod.getMethod();
-            //获取此请求，是否需要返回值包装，设置一个属性标记
+            //Set an attribute when the current request needs a general response wrapper
             if (clazz.isAnnotationPresent(ResponseWrapper.class)) {
-                System.out.println("preHandle:" + clazz.getName());
+                log.info("preHandle:" + clazz.getName());
                 request.setAttribute(RESPONSE_WRAPPER_ANNOTATION, clazz.getAnnotation(ResponseWrapper.class));
             } else if (method.isAnnotationPresent(ResponseWrapper.class)) {
-                System.out.println("preHandle:" + method.getName());
+                log.info("preHandle:" + method.getName());
                 request.setAttribute(RESPONSE_WRAPPER_ANNOTATION, method.getAnnotation(ResponseWrapper.class));
             }
         }
@@ -37,12 +44,12 @@ public class ResponseWrapperInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-
+        log.info("postHandle::()");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
                                 Exception ex) throws Exception {
-
+        log.info("afterCompletion::()");
     }
 }
